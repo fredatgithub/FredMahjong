@@ -1,1 +1,1 @@
-# FredMahjong
+# Fred Mahjong
