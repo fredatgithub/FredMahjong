@@ -9,7 +9,7 @@
           RowSpacing="12">
         <Grid Grid.Row="0" ColumnDefinitions="*,Auto" VerticalOptions="Center">
             <VerticalStackLayout Spacing="1" VerticalOptions="Center">
-                <Label Text="JARDIN DE"
+                <Label Text="JEUX DE"
                        FontSize="11"
                        CharacterSpacing="3"
                        TextColor="#B6C7A1"
@@ -52,7 +52,7 @@
                            CharacterSpacing="2"
                            TextColor="#B6C7A1"
                            FontAttributes="Bold" />
-                    <Label Text="01  ·  Le jardin"
+                    <Label Text="01  ·  LE PLUS FACILE"
                            FontSize="13"
                            TextColor="#FFF1D1"
                            FontAttributes="Bold" />
