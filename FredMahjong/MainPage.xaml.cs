@@ -50,8 +50,8 @@ public partial class MainPage : ContentPage
 
         for (var index = 0; index < upperLayerPositions.Length; index++)
         {
-            var position = upperLayerPositions[index];
-            var tile = new TileModel(position.Column, position.Row, 1, faces[Rows * Columns + index]);
+            var (Column, Row) = upperLayerPositions[index];
+            var tile = new TileModel(Column, Row, 1, faces[Rows * Columns + index]);
             AddTile(tile);
         }
 
@@ -72,13 +72,14 @@ public partial class MainPage : ContentPage
                 .Select(number => new TileFace($"{suit.Name}{number}", number.ToString(), suit.Name, suit.Color)))
             .ToArray();
 
-        return numberedFaces
-            .Concat(new[]
-            {
-                new TileFace("dragon-red", "中", "DRAGON", Color.FromArgb("#B7443E")),
-                new TileFace("dragon-green", "發", "DRAGON", Color.FromArgb("#287A69"))
-            })
-            .ToArray();
+        return
+        [
+          .. numberedFaces
+,
+          new TileFace("dragon-red", "中", "DRAGON", Color.FromArgb("#B7443E")),
+          new TileFace("dragon-green", "發", "DRAGON", Color.FromArgb("#287A69"))
+,
+        ];
     }
 
     private void AddTile(TileModel tile)
