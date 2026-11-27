@@ -52,7 +52,8 @@
                            CharacterSpacing="2"
                            TextColor="#B6C7A1"
                            FontAttributes="Bold" />
-                    <Label Text="01  ·  LE PLUS FACILE"
+                    <Label x:Name="LevelLabel"
+                           Text="01  ·  LE PLUS FACILE"
                            FontSize="13"
                            TextColor="#FFF1D1"
                            FontAttributes="Bold" />

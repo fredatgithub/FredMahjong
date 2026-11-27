@@ -15,6 +15,7 @@ public partial class MainPage : ContentPage
     private readonly Random random = new();
     private TileModel? selectedTile;
     private int gameGeneration;
+    private int level = 1;
     private int score;
     private int removedPairs;
 
@@ -34,8 +35,14 @@ public partial class MainPage : ContentPage
         if (!preserveScore)
         {
             score = 0;
+            level = 1;
+        }
+        else
+        {
+            level++;
         }
 
+        LevelLabel.Text = $"{level:D2}  ·  LE PLUS FACILE";
         removedPairs = 0;
 
         var faces = CreateFaces()
