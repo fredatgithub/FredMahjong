@@ -14,6 +14,7 @@ public partial class MainPage : ContentPage
     private readonly Stack<TileModel[]> moveHistory = [];
     private readonly Random random = new();
     private TileModel? selectedTile;
+    private int gameGeneration;
     private int score;
     private int removedPairs;
 
@@ -25,6 +26,7 @@ public partial class MainPage : ContentPage
 
     private void StartNewGame()
     {
+        gameGeneration++;
         BoardGrid.Children.Clear();
         tiles.Clear();
         moveHistory.Clear();
@@ -181,13 +183,19 @@ public partial class MainPage : ContentPage
             selectedTile = null;
             removedPairs++;
             score += 100;
-            UpdateGameInfo(removedPairs == PairsInGame
-                ? "Félicitations ! Le jardin est libéré."
+            var gameCompleted = removedPairs == PairsInGame;
+            UpdateGameInfo(gameCompleted
+                ? "Bravo !"
                 : "Belle paire ! Continuez votre partie.");
 
-            if (removedPairs < PairsInGame && !FindAvailablePair().Any())
+            if (!gameCompleted && !FindAvailablePair().Any())
             {
                 StatusLabel.Text = "Plus de paire disponible. Mélangez les tuiles.";
+            }
+
+            if (gameCompleted)
+            {
+                _ = StartNewGameAfterWinAsync(gameGeneration);
             }
         }
         else
@@ -212,6 +220,11 @@ public partial class MainPage : ContentPage
 
     private void OnHintClicked(object? sender, TappedEventArgs e)
     {
+        if (removedPairs == PairsInGame)
+        {
+            return;
+        }
+
         var pair = FindAvailablePair().FirstOrDefault();
         if (pair is null)
         {
@@ -243,8 +256,22 @@ public partial class MainPage : ContentPage
         RefreshTileStates();
     }
 
+    private async Task StartNewGameAfterWinAsync(int completedGameGeneration)
+    {
+        await Task.Delay(TimeSpan.FromSeconds(4));
+        if (gameGeneration == completedGameGeneration)
+        {
+            StartNewGame();
+        }
+    }
+
     private void OnShuffleClicked(object? sender, TappedEventArgs e)
     {
+        if (removedPairs == PairsInGame)
+        {
+            return;
+        }
+
         var remaining = tiles.Where(tile => !tile.IsRemoved).ToArray();
         var faces = remaining.Select(tile => tile.Face).OrderBy(_ => random.Next()).ToArray();
         for (var index = 0; index < remaining.Length; index++)
@@ -262,6 +289,11 @@ public partial class MainPage : ContentPage
 
     private void OnUndoClicked(object? sender, TappedEventArgs e)
     {
+        if (removedPairs == PairsInGame)
+        {
+            return;
+        }
+
         if (!moveHistory.TryPop(out var previousMove))
         {
             StatusLabel.Text = "Aucun coup à annuler.";
