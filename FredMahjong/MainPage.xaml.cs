@@ -1,4 +1,5 @@
 using Microsoft.Maui.Controls.Shapes;
+using Microsoft.Maui.Storage;
 
 namespace FredMahjong;
 
@@ -7,6 +8,7 @@ public partial class MainPage : ContentPage
   private const int Columns = 8;
   private const int Rows = 6;
   private const int PairsInGame = 26;
+  private const string HighScorePreferenceKey = "HighScore";
   private static readonly Color Gold = Color.FromArgb("#F4D58A");
   private static readonly Color TileColor = Color.FromArgb("#F3E8CA");
   private static readonly Color TileEdge = Color.FromArgb("#D2BD91");
@@ -17,11 +19,13 @@ public partial class MainPage : ContentPage
   private int gameGeneration;
   private int level = 1;
   private int score;
+  private int highScore;
   private int removedPairs;
 
   public MainPage()
   {
     InitializeComponent();
+    highScore = Preferences.Get(HighScorePreferenceKey, 0);
     StartNewGame();
   }
 
@@ -208,6 +212,12 @@ public partial class MainPage : ContentPage
       selectedTile = null;
       removedPairs++;
       score += 100;
+      if (score > highScore)
+      {
+        highScore = score;
+        Preferences.Set(HighScorePreferenceKey, highScore);
+      }
+
       var gameCompleted = removedPairs == PairsInGame;
       UpdateGameInfo(gameCompleted
           ? "Bravo !"
@@ -393,6 +403,7 @@ public partial class MainPage : ContentPage
 
     PairsLabel.Text = $"{PairsInGame - removedPairs} paires";
     ScoreLabel.Text = score.ToString("D5");
+    HighScoreLabel.Text = highScore.ToString("D5");
   }
 
   private void UpdateGameInfo(string message)

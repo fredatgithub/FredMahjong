@@ -59,6 +59,17 @@
                            FontAttributes="Bold" />
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="2" Spacing="1" HorizontalOptions="End">
+                    <Label Text="SCORE LE PLUS ÉLEVÉ"
+                           FontSize="8"
+                           TextColor="#B6C7A1"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="End" />
+                    <Label x:Name="HighScoreLabel"
+                           Text="00000"
+                           FontSize="11"
+                           TextColor="#F4D58A"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="End" />
                     <Label Text="SCORE"
                            FontSize="9"
                            CharacterSpacing="2"
