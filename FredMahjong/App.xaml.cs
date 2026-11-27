@@ -1,6 +1,6 @@
 ﻿namespace FredMahjong
 {
-  public partial class App: Application
+  public partial class App : Application
   {
     public App()
     {

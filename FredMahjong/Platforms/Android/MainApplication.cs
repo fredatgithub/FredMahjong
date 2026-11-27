@@ -4,7 +4,7 @@ using Android.Runtime;
 namespace FredMahjong
 {
   [Application]
-  public class MainApplication: MauiApplication
+  public class MainApplication : MauiApplication
   {
     public MainApplication(IntPtr handle, JniHandleOwnership ownership)
         : base(handle, ownership)
