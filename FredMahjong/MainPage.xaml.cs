@@ -24,14 +24,18 @@ public partial class MainPage : ContentPage
         StartNewGame();
     }
 
-    private void StartNewGame()
+    private void StartNewGame(bool preserveScore = false)
     {
         gameGeneration++;
         BoardGrid.Children.Clear();
         tiles.Clear();
         moveHistory.Clear();
         selectedTile = null;
-        score = 0;
+        if (!preserveScore)
+        {
+            score = 0;
+        }
+
         removedPairs = 0;
 
         var faces = CreateFaces()
@@ -88,7 +92,7 @@ public partial class MainPage : ContentPage
     {
         var faceLabel = new Label
         {
-            FontSize = tile.Face.Suit == "DRAGON" ? 22 : 24,
+            FontSize = tile.Face.Suit == "DRAGON" ? 28 : 30,
             FontAttributes = FontAttributes.Bold,
             TextColor = tile.Face.Color,
             HorizontalTextAlignment = TextAlignment.Center,
@@ -97,7 +101,7 @@ public partial class MainPage : ContentPage
         };
         var suitLabel = new Label
         {
-            FontSize = 8,
+            FontSize = 11,
             CharacterSpacing = 0.6,
             FontAttributes = FontAttributes.Bold,
             TextColor = Color.FromArgb("#958766"),
@@ -261,7 +265,7 @@ public partial class MainPage : ContentPage
         await Task.Delay(TimeSpan.FromSeconds(4));
         if (gameGeneration == completedGameGeneration)
         {
-            StartNewGame();
+            StartNewGame(preserveScore: true);
         }
     }
 
